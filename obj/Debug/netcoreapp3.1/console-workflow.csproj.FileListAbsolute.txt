@@ -1,0 +1,9 @@
+C:\Users\fatih\source\repos\console-workflow\bin\Debug\netcoreapp3.1\console-workflow.deps.json
+C:\Users\fatih\source\repos\console-workflow\bin\Debug\netcoreapp3.1\console-workflow.dll
+C:\Users\fatih\source\repos\console-workflow\bin\Debug\netcoreapp3.1\console-workflow.pdb
+C:\Users\fatih\source\repos\console-workflow\obj\Debug\netcoreapp3.1\console-workflow.csprojAssemblyReference.cache
+C:\Users\fatih\source\repos\console-workflow\obj\Debug\netcoreapp3.1\console-workflow.AssemblyInfoInputs.cache
+C:\Users\fatih\source\repos\console-workflow\obj\Debug\netcoreapp3.1\console-workflow.AssemblyInfo.cs
+C:\Users\fatih\source\repos\console-workflow\obj\Debug\netcoreapp3.1\console-workflow.csproj.CoreCompileInputs.cache
+C:\Users\fatih\source\repos\console-workflow\obj\Debug\netcoreapp3.1\console-workflow.dll
+C:\Users\fatih\source\repos\console-workflow\obj\Debug\netcoreapp3.1\console-workflow.pdb
