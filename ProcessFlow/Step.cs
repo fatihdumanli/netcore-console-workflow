@@ -14,7 +14,7 @@ namespace ProcessFlow
         private StepConfiguration _configuration = new StepConfiguration();
 
         public string Name {
-            get{
+            get {
                 return _configuration.Name;
             }
         }
@@ -37,11 +37,20 @@ namespace ProcessFlow
             var handler = Activator.CreateInstance(handlerType);
             handlerType.GetMethod("Handle").Invoke(handler, null);
 
-            //Show the Menu
-            var content = _menuComposer.Compose(this, this._configuration.MenuItems);
-            _output.Write(content);
-            var input = _input.GetInput();
-            NextStepAction(input);
+            //Check whether final step or not
+            if(_configuration.IsFinalStep)
+            {
+                Process.FinalizeProcess(_output);
+            }
+
+            else 
+            {
+                 //Show the Menu
+                var content = _menuComposer.Compose(this, this._configuration.MenuItems);
+                _output.Write(content);
+                var input = _input.GetInput();
+                NextStepAction(input);
+            }
         }
      
         protected void NextStepAction(string input)
@@ -54,7 +63,5 @@ namespace ProcessFlow
                 
             stepToExcecute.Execute();                       
         }
-
-
     }
 }

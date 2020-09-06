@@ -11,6 +11,8 @@ namespace ProcessFlow.Configuration
         public List<StepMenuItem> MenuItems { get; set; }    
         public string Name { get; set; }
 
+        public bool IsFinalStep { get; set; }
+
         public StepConfiguration()
         {
             if(PotentialNextSteps == null)

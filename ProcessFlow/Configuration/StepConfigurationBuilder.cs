@@ -30,6 +30,12 @@ namespace ProcessFlow.Configuration
             return this;
         }
 
+        public StepConfigurationBuilder MarkAsFinalStep()
+        {
+            config.IsFinalStep = true;
+            return this;
+        }
+        
         public StepConfiguration Build()
         {
             return config;
