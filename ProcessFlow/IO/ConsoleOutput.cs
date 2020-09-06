@@ -7,7 +7,8 @@ namespace Renderer
     {
         public void Write(string content)
         {
-            Console.WriteLine(content);
+            Console.Write("\n");
+            Console.Write(content);
         }
     }
 }
