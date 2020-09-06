@@ -20,8 +20,19 @@ namespace ProcessFlow
         }
         public static Step GetNextStepBySelectionKey(StepConfiguration config, string key)
         {
-            Debug.WriteLine("fdsafdsafdsaf");
-            var nextStep = config.PotentialNextSteps.Where(p => p.Key == key).SingleOrDefault();
+            KeyValuePair<string, string> nextStep;
+
+            //Step key is mandatory, multiple next steps.
+            if(config.HasMultipleNextStep)
+            {
+                nextStep = config.PotentialNextSteps.Where(p => p.Key == key).SingleOrDefault();
+            }
+
+            else 
+            {
+                nextStep = config.PotentialNextSteps.First();
+            }
+
             var nextStepName = nextStep.Value;
             return GetStepByName(nextStepName);
         }

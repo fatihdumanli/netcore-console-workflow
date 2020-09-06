@@ -8,7 +8,9 @@ namespace ProcessFlow.Configuration
         //stepName, stepKey
         public List<KeyValuePair<string, string>> PotentialNextSteps { get; set; }
         public Type StepHandlerType { get; set; }
-        public List<StepMenuItem> MenuItems { get; set; }    
+        public object StepHandlerParameter { get; set; }         
+        public List<StepMenuItem> MenuItems { get; set; }   
+        public bool HasMultipleNextStep { get; set; } = true;
         public string Name { get; set; }
 
         public bool IsFinalStep { get; set; }

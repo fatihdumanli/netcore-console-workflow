@@ -32,12 +32,12 @@ namespace ProcessFlow
 
         public void Execute()
         {
-            //Execute BL
+            //Execute Before Step Executed method of handler
             if(_configuration.StepHandlerType != null)
             {
                   var handlerType = _configuration.StepHandlerType;
                   var handler = Activator.CreateInstance(handlerType);
-                  handlerType.GetMethod("Handle").Invoke(handler, null);
+                  handlerType.GetMethod("BeforeStepExecuted").Invoke(handler, new object[] { _configuration.StepHandlerParameter });
             }
         
             //Check whether final step or not
@@ -51,14 +51,31 @@ namespace ProcessFlow
                  //Show the Menu
                 var content = _menuComposer.Compose(this, this._configuration.MenuItems);
                 _output.Write(content);
-                var input = _input.GetInput();
-                NextStepAction(input);
+                
+                string input = string.Empty;
+
+                //If step has multiple next step, get the step key from input.
+                if(_configuration.HasMultipleNextStep)
+                {
+                    input = _input.GetInput();
+                }
+                NextStepAction(input, this);
 
             }
         }
      
-        protected void NextStepAction(string input)
+        protected void NextStepAction(string input, Step lastExecuted)
         {
+            var lastExecutedStepHandlerType = lastExecuted._configuration.StepHandlerType;
+            
+            //Do works to do after last step is executed.
+            if(lastExecutedStepHandlerType != null)
+            {
+                  var handler = Activator.CreateInstance(lastExecutedStepHandlerType);
+                  lastExecutedStepHandlerType.GetMethod("AfterStepExecuted").Invoke(handler, new object[] { lastExecuted._configuration.StepHandlerParameter });
+            }
+
+            //Eğer input'a gerek yoksa, next step'e inputsuz karar verebilmeli, ve sadece tek bir nextStep'i olmalı.
             var stepToExcecute = 
                 StepContainer.GetNextStepBySelectionKey(_configuration, input); 
 
