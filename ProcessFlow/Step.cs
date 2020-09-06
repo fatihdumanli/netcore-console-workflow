@@ -33,10 +33,13 @@ namespace ProcessFlow
         public void Execute()
         {
             //Execute BL
-            var handlerType = _configuration.StepHandlerType;
-            var handler = Activator.CreateInstance(handlerType);
-            handlerType.GetMethod("Handle").Invoke(handler, null);
-
+            if(_configuration.StepHandlerType != null)
+            {
+                  var handlerType = _configuration.StepHandlerType;
+                  var handler = Activator.CreateInstance(handlerType);
+                  handlerType.GetMethod("Handle").Invoke(handler, null);
+            }
+        
             //Check whether final step or not
             if(_configuration.IsFinalStep)
             {
@@ -50,6 +53,7 @@ namespace ProcessFlow
                 _output.Write(content);
                 var input = _input.GetInput();
                 NextStepAction(input);
+
             }
         }
      
