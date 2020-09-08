@@ -1,5 +1,5 @@
 
-﻿# Console Workflow for .NET Core
+# Console Workflow for .NET Core
 
 Console Workflow is a simple workflow framework lets your Console app **focus only it's business**. The application flow  will be handled by Console Workflow. You can create functional menu-based console clients when you test your backend code.    
 
