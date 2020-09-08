@@ -74,9 +74,7 @@ Step configuration can be defined fluent and straighforward:
 
 An example Step Handler shown below:
 
-# Last Words
 
-Your contribution to this repository will be appreciated :)
      public class MainStepHandler : IStepHandler
     {
         public void AfterStepExecuted(object handlerArg)
