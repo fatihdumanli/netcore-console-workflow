@@ -22,6 +22,9 @@ namespace ProcessFlow
         {
             KeyValuePair<string, string> nextStep;
 
+            if(config.PotentialNextSteps == null || config.PotentialNextSteps.Count == 0)
+                throw new NextStepNotFoundException();
+            
             //Step key is mandatory, multiple next steps.
             if(config.HasMultipleNextStep)
             {

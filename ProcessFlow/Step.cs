@@ -30,10 +30,10 @@ namespace ProcessFlow
         
         public StepId Id { get; set; }
 
-        public void Execute()
+        public void Execute(bool skipHandler = false)
         {
             //Execute Before Step Executed method of handler
-            if(_configuration.StepHandlerType != null)
+            if(_configuration.StepHandlerType != null && !skipHandler)
             {
                   var handlerType = _configuration.StepHandlerType;
                   var handler = Activator.CreateInstance(handlerType);
@@ -80,7 +80,11 @@ namespace ProcessFlow
                 StepContainer.GetNextStepBySelectionKey(_configuration, input); 
 
             if(stepToExcecute == null)
-                throw new NextStepNotFoundException();
+            {
+                _output.Write(" [!] Next step cannot found. Please check your input.");
+                lastExecuted.Execute(skipHandler: true);
+                return;
+            }
                 
             stepToExcecute.Execute();                       
         }
