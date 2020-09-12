@@ -1,4 +1,5 @@
-﻿# Console Workflow for .NET Core
+
+# Console Workflow for .NET Core
 
 Console Workflow is a simple workflow framework lets your Console app **focus only it's business**. The application flow  will be handled by Console Workflow. You can create functional menu-based console clients when you test your backend code.    
 
@@ -7,6 +8,35 @@ Console Workflow is a simple workflow framework lets your Console app **focus on
 The diagram below shows a simple workflow. You should define your steps and relations between them. Each step might have works to do inside the step. You can manage this with the help of `Step Handler`s.
 
 ![alt text](https://i.ibb.co/6sn0y5C/workflow-diagram.png)
+
+The diagram above can be composed almost in English as shown below:
+
+     var mainStep = new Step(new StepConfigurationBuilder()
+                    .SetName("STEP A")
+                    .ExecuteAfter("STEP B", "b")
+                    .Build());
+                    
+     var childStepB = new Step(new StepConfigurationBuilder()
+                      .SetName("STEP B")
+                      .ExecuteAfter("STEP C", "c")
+                      .ExecuteAfter("STEP D", "d")
+                      .ExecuteAfter("STEP E", "e")
+                      .Build());
+                      
+     var childStepC = new Step(new StepConfigurationBuilder()
+                      .SetName("STEP C")
+                      .ExecuteAfter("STEP FINAL", "f")
+                      .Build());
+                      
+     var childStepD = new Step(new StepConfigurationBuilder()
+                      .SetName("STEP D")
+                      .Build());
+                      
+    var childStepE = new Step(new StepConfigurationBuilder()
+                      .SetName("STEP E")
+                      .ExecuteAfter("STEP A", "a")
+                      .Build());
+
 
 # Usage
 
@@ -36,6 +66,35 @@ Step configuration can be defined fluent and straighforward:
                 .AddMenuItem(1, "View catalog items", "c")
                 .AddMenuItem(2, "View your basket", "b")
                 .Build());
+                
+ ## Define your 'Step Handler's
+ `Step handler` is used to do some work while step being executed. It might be a remote service call or some calculation. 
+
+`IStepHandler` interface has two methods called `BeforeStepExecuted` and `AfterStepExecuted`. These methods must be implemented in order to manage the works while step being executed.
+
+An example Step Handler shown below:
+
+
+     public class MainStepHandler : IStepHandler
+    {
+        public void AfterStepExecuted(object handlerArg)
+        {
+        }
+
+        public async void BeforeStepExecuted(object handlerArg)
+        {
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(Constants.API_GATEWAY);
+                var response = await client.GetStringAsync(Constants.CatalogConstants.GET_CATALOG_ITEMS_PATH);
+                var resultModel = JsonConvert.DeserializeObject<ProductCatalogResult>(response);
+
+                InMemoryDatabase.Products = resultModel.Data;
+            
+            }                    
+        }
+
+In the given reference example, Step Handler's BeforeStepExecuted method performs an REST call to prepare some data for application use in future.
 
 ## Register steps to step container
 Each step must be registered to the `StepContainer`. 
@@ -55,6 +114,3 @@ To start the program's flow, just call the StartProcessFlow method of Process st
 A sample output 
 
 ![alt text](https://i.ibb.co/VBKrcx9/sample-output.png)
-
-
-
