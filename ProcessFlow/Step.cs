@@ -48,15 +48,18 @@ namespace ProcessFlow
 
             else 
             {
-                 //Show the Menu
-                var content = _menuComposer.Compose(this, this._configuration.MenuItems);
-                _output.Write(content);
-                
+                 
                 string input = string.Empty;
+
 
                 //If step has multiple next step, get the step key from input.
                 if(_configuration.HasMultipleNextStep)
                 {
+                    //Show the Menu
+                    var content = _menuComposer.Compose(this, this._configuration.MenuItems);
+                    _output.Write(content);
+                    
+
                     input = _input.GetInput();
                 }
                 NextStepAction(input, this);
