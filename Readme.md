@@ -41,7 +41,7 @@ The diagram above can be composed almost in English as shown below:
 # Usage
 
 ## Define your application steps.
-First, you should define your application steps by instantiating new `Step` objects. Step objects have `Name`, `Handler` class and a `Menu`.
+First, application steps must be defined by instantiating new `Step` objects. Step objects have `Name`, `Handler` class and a `Menu`.
 
 Defining a step is simple and fluent as shown below.
 
